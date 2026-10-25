@@ -1,16 +1,16 @@
-SELECT courses.title AS course_title
-FROM courses
-LEFT JOIN enrollments
-    ON courses.id = enrollments.course_id
-GROUP BY courses.id, courses.title
-HAVING COUNT(enrollments.student_id) > (
-    SELECT AVG(enrollment_count)
+SELECT c.title AS course_title
+FROM courses AS c
+LEFT JOIN enrollments AS e
+    ON c.id = e.course_id
+GROUP BY c.id, c.title
+HAVING COUNT(e.course_id) > (
+    SELECT AVG(course_enrollment_count)
     FROM (
-        SELECT COUNT(enrollments.course_id) AS enrollment_count
-        FROM courses
-        LEFT JOIN enrollments
-            ON courses.id = enrollments.course_id
-        GROUP BY courses.id
-    ) AS course_counts
+        SELECT COUNT(e2.course_id) AS course_enrollment_count
+        FROM courses AS c2
+        LEFT JOIN enrollments AS e2
+            ON c2.id = e2.course_id
+        GROUP BY c2.id
+    ) AS enrollment_counts
 )
 ORDER BY course_title ASC;
