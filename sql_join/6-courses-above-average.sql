@@ -11,6 +11,6 @@ HAVING COUNT(enrollments.student_id) > (
         LEFT JOIN enrollments
             ON courses.id = enrollments.course_id
         GROUP BY courses.id
-    )
+    ) AS course_counts
 )
 ORDER BY course_title ASC;
