@@ -1,5 +1,5 @@
 SELECT
-    courses.course_title AS course_title,
+    courses.title AS course_title,
     COUNT(enrollments.student_id) AS enrollment_count
 FROM courses
 LEFT JOIN enrollments
